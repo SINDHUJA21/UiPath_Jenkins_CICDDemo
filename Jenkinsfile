@@ -51,11 +51,11 @@ pipeline {
 	                      outputPath: "Output\\${env.BUILD_NUMBER}",
 	                      projectJsonPath: "project.json",
 	                      version: [$class: 'ManualVersionEntry', version: "${MAJOR}.${MINOR}.${env.BUILD_NUMBER}"],
-	                      useOrchestrator: true,
-						  orchestratorAddress: "${UIPATH_ORCH_URL}",
-	                      orchestratorTenant: "${UIPATH_ORCH_TENANT_NAME}",
-	                    //   folder: "${UIPATH_ORCH_FOLDER_NAME}",
-        	              credentials: Token(accountName: "${UIPATH_ORCH_LOGICAL_NAME}", credentialsId: 'APIUserKey')
+	                      useOrchestrator: false
+						//   orchestratorAddress: "${UIPATH_ORCH_URL}",
+	                    //   orchestratorTenant: "${UIPATH_ORCH_TENANT_NAME}",
+	                    // //   folder: "${UIPATH_ORCH_FOLDER_NAME}",
+        	            //   credentials: Token(accountName: "${UIPATH_ORCH_LOGICAL_NAME}", credentialsId: 'APIUserKey')
 	        )
 					}
 	        //         echo "Building..with ${WORKSPACE}"
@@ -80,22 +80,24 @@ pipeline {
 	
 
 	         // Deploy Stages
-	        // stage('Deploy to UAT') {
-	        //     steps {
-	        //         echo "Deploying ${BRANCH_NAME} to UAT "
-	        //         UiPathDeploy (
-	        //         packagePath: "Output\\${env.BUILD_NUMBER}",
-	        //         orchestratorAddress: "${UIPATH_ORCH_URL}",
-	        //         orchestratorTenant: "${UIPATH_ORCH_TENANT_NAME}",
-	        //         folderName: "${UIPATH_ORCH_FOLDER_NAME}",
-	        //         environments: 'DEV',
-	        //         //credentials: [$class: 'UserPassAuthenticationEntry', credentialsId: 'APIUserKey']
-	        //         credentials: Token(accountName: "${UIPATH_ORCH_LOGICAL_NAME}", credentialsId: 'APIUserKey'), 
-	
+	        stage('Deploy to UAT') {
+	            steps {
+					ws("D:\\Learning-UIPath\\Jenkins\\") {
+						// sh 'pwd'					
+						echo "Deploying ${BRANCH_NAME} to UAT "
+						UiPathDeploy (
+						packagePath: "Output\\${env.BUILD_NUMBER}",
+						orchestratorAddress: "${UIPATH_ORCH_URL}",
+						orchestratorTenant: "${UIPATH_ORCH_TENANT_NAME}",
+						folderName: "${UIPATH_ORCH_FOLDER_NAME}",
+						// environments: 'DEV',
+						//credentials: [$class: 'UserPassAuthenticationEntry', credentialsId: 'APIUserKey']
+						credentials: Token(accountName: "${UIPATH_ORCH_LOGICAL_NAME}", credentialsId: 'APIUserKey')
 
-	        // )
-	        //     }
-	        // }
+				)
+				}
+	            }
+	        }
 	
 
 	
