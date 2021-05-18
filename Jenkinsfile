@@ -40,7 +40,7 @@ pipeline {
 	                      outputPath: "Output\\${env.BUILD_NUMBER}",
 	                      projectJsonPath: "project.json",
 	                      version: [$class: 'ManualVersionEntry', version: "${MAJOR}.${MINOR}.${env.BUILD_NUMBER}"],
-	                      useOrchestrator: true
+	                      useOrchestrator: true,
 						  orchestratorAddress: "${UIPATH_ORCH_URL}",
 	                      orchestratorTenant: "${UIPATH_ORCH_TENANT_NAME}",
 	                      folderName: "${UIPATH_ORCH_FOLDER_NAME}",
