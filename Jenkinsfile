@@ -45,7 +45,7 @@ pipeline {
 	        stage('Build') {
 	            steps {
 					ws("D:\\Learning-UIPath\\Jenkins\\") {
-						sh 'pwd'
+						// sh 'pwd'
 						echo "Building..with ${WORKSPACE}"
 	                    UiPathPack (
 	                      outputPath: "Output\\${env.BUILD_NUMBER}",
