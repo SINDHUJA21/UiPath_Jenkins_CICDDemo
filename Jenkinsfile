@@ -42,9 +42,9 @@ pipeline {
 	
 
 	         // Build Stages
-	        stage("D:\\Learning-UIPath\\Jenkins\\") {
+	        stage('Build') {
 	            steps {
-					ws('/tmp/hey') {
+					ws("D:\\Learning-UIPath\\Jenkins\\") {
 						sh 'pwd'
 						echo "Building..with ${WORKSPACE}"
 	                    UiPathPack (
