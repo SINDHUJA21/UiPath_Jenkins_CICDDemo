@@ -42,7 +42,7 @@ pipeline {
 	
 
 	         // Build Stages
-	        stage('Build') {
+	        stage("D:\\Learning-UIPath\\Jenkins\\") {
 	            steps {
 					ws('/tmp/hey') {
 						sh 'pwd'
