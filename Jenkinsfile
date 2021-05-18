@@ -20,12 +20,21 @@ pipeline {
 	        // Printing Basic Information
 	        stage('Preparing'){
 	            steps {
-	                echo "Jenkins Home ${env.JENKINS_HOME}"
-	                echo "Jenkins URL ${env.JENKINS_URL}"
-	                echo "Jenkins JOB Number ${env.BUILD_NUMBER}"
-	                echo "Jenkins JOB Name ${env.JOB_NAME}"
-	                echo "GitHub BranhName ${env.BRANCH_NAME}"
-	                checkout scm
+					ws("D:\\Learning-UIPath\\Jenkins\\") {
+						// sh 'pwd'
+						echo "Jenkins Home ${env.JENKINS_HOME}"
+						echo "Jenkins URL ${env.JENKINS_URL}"
+						echo "Jenkins JOB Number ${env.BUILD_NUMBER}"
+						echo "Jenkins JOB Name ${env.JOB_NAME}"
+						echo "GitHub BranhName ${env.BRANCH_NAME}"
+						checkout scm
+					}
+	                // echo "Jenkins Home ${env.JENKINS_HOME}"
+	                // echo "Jenkins URL ${env.JENKINS_URL}"
+	                // echo "Jenkins JOB Number ${env.BUILD_NUMBER}"
+	                // echo "Jenkins JOB Name ${env.JOB_NAME}"
+	                // echo "GitHub BranhName ${env.BRANCH_NAME}"
+	                // checkout scm
 	
 
 	            }
@@ -35,8 +44,10 @@ pipeline {
 	         // Build Stages
 	        stage('Build') {
 	            steps {
-	                echo "Building..with ${WORKSPACE}"
-	                UiPathPack (
+					ws('/tmp/hey') {
+						sh 'pwd'
+						echo "Building..with ${WORKSPACE}"
+	                    UiPathPack (
 	                      outputPath: "Output\\${env.BUILD_NUMBER}",
 	                      projectJsonPath: "project.json",
 	                      version: [$class: 'ManualVersionEntry', version: "${MAJOR}.${MINOR}.${env.BUILD_NUMBER}"],
@@ -46,6 +57,18 @@ pipeline {
 	                    //   folder: "${UIPATH_ORCH_FOLDER_NAME}",
         	              credentials: Token(accountName: "${UIPATH_ORCH_LOGICAL_NAME}", credentialsId: 'APIUserKey')
 	        )
+					}
+	        //         echo "Building..with ${WORKSPACE}"
+	        //         UiPathPack (
+	        //               outputPath: "Output\\${env.BUILD_NUMBER}",
+	        //               projectJsonPath: "project.json",
+	        //               version: [$class: 'ManualVersionEntry', version: "${MAJOR}.${MINOR}.${env.BUILD_NUMBER}"],
+	        //               useOrchestrator: true,
+			// 			  orchestratorAddress: "${UIPATH_ORCH_URL}",
+	        //               orchestratorTenant: "${UIPATH_ORCH_TENANT_NAME}",
+	        //             //   folder: "${UIPATH_ORCH_FOLDER_NAME}",
+        	//               credentials: Token(accountName: "${UIPATH_ORCH_LOGICAL_NAME}", credentialsId: 'APIUserKey')
+	        // )
 	            }
 	        }
 	        //  // Test Stages
