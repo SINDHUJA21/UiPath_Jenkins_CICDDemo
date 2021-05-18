@@ -8,8 +8,8 @@ pipeline {
 	        MINOR = '0'
 	        //Orchestrator Services
 	        UIPATH_ORCH_URL = "https://cloud.uipath.com/"
-	        UIPATH_ORCH_LOGICAL_NAME = "anupaminc"
-	        UIPATH_ORCH_TENANT_NAME = "Descriptify"
+	        UIPATH_ORCH_LOGICAL_NAME = "JanDurai"
+	        UIPATH_ORCH_TENANT_NAME = "JanDurai"
 	        UIPATH_ORCH_FOLDER_NAME = "Default"
 	    }
 	
@@ -40,46 +40,50 @@ pipeline {
 	                      outputPath: "Output\\${env.BUILD_NUMBER}",
 	                      projectJsonPath: "project.json",
 	                      version: [$class: 'ManualVersionEntry', version: "${MAJOR}.${MINOR}.${env.BUILD_NUMBER}"],
-	                      useOrchestrator: false
+	                      useOrchestrator: true
+						  orchestratorAddress: "${UIPATH_ORCH_URL}",
+	                      orchestratorTenant: "${UIPATH_ORCH_TENANT_NAME}",
+	                      folderName: "${UIPATH_ORCH_FOLDER_NAME}",
+        	              credentials: Token(accountName: "${UIPATH_ORCH_LOGICAL_NAME}", credentialsId: 'APIUserKey'),
 	        )
 	            }
 	        }
-	         // Test Stages
-	        stage('Test') {
-	            steps {
-	                echo 'Testing..the workflow...'
-	            }
-	        }
+	        //  // Test Stages
+	        // stage('Test') {
+	        //     steps {
+	        //         echo 'Testing..the workflow...'
+	        //     }
+	        // }
 	
 
 	         // Deploy Stages
-	        stage('Deploy to UAT') {
-	            steps {
-	                echo "Deploying ${BRANCH_NAME} to UAT "
-	                UiPathDeploy (
-	                packagePath: "Output\\${env.BUILD_NUMBER}",
-	                orchestratorAddress: "${UIPATH_ORCH_URL}",
-	                orchestratorTenant: "${UIPATH_ORCH_TENANT_NAME}",
-	                folderName: "${UIPATH_ORCH_FOLDER_NAME}",
-	                environments: 'DEV',
-	                //credentials: [$class: 'UserPassAuthenticationEntry', credentialsId: 'APIUserKey']
-	                credentials: Token(accountName: "${UIPATH_ORCH_LOGICAL_NAME}", credentialsId: 'APIUserKey'), 
+	        // stage('Deploy to UAT') {
+	        //     steps {
+	        //         echo "Deploying ${BRANCH_NAME} to UAT "
+	        //         UiPathDeploy (
+	        //         packagePath: "Output\\${env.BUILD_NUMBER}",
+	        //         orchestratorAddress: "${UIPATH_ORCH_URL}",
+	        //         orchestratorTenant: "${UIPATH_ORCH_TENANT_NAME}",
+	        //         folderName: "${UIPATH_ORCH_FOLDER_NAME}",
+	        //         environments: 'DEV',
+	        //         //credentials: [$class: 'UserPassAuthenticationEntry', credentialsId: 'APIUserKey']
+	        //         credentials: Token(accountName: "${UIPATH_ORCH_LOGICAL_NAME}", credentialsId: 'APIUserKey'), 
 	
 
-	        )
-	            }
-	        }
+	        // )
+	        //     }
+	        // }
 	
 
 	
 
 	         // Deploy to Production Step
-	        stage('Deploy to Production') {
-	            steps {
-	                echo 'Deploy to Production'
-	                }
-	            }
-	    }
+	    //     stage('Deploy to Production') {
+	    //         steps {
+	    //             echo 'Deploy to Production'
+	    //             }
+	    //         }
+	    // }
 	
 
 	    // Options
